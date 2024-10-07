@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d5167ff181.js" crossorigin="anonymous"></script>
+    <style>
+        body{
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            border: 0;
+            outline: 0;
+            scroll-behavior: smooth;
+            background-color:rgb(255, 255, 200);
+        }
+        .song{
+            width: 100%;
+            height: 55vh;
+            display: flex;
+           /* background: gray; */
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            top: 150px;
+            position: absolute;
+        }
+        .player{
+            background-color: gray;
+            width: 260px;
+            padding: 25px 35px;
+            text-align: center;
+            border-radius: 30px;
+        }
+        nav{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0px;
+            top: 0;
+        }
+        
+        
+        .circle{
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                background: #fff;
+                color: rgb(94, 255, 225);
+                box-shadow: 0 5px 10px rgb(94, 255, 225);
+            }
+            .img{
+                width: 135px;
+                height: 135px;
+                border-radius: 10px;
+                box-shadow: 0 10px 60px pink;
+                margin-top: 25px;
+                border: 10px pink;
+                background-color: black;
+            }
+            #progress{
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 100%;
+                height: 6px;
+                background: rgb(255, 157, 222);
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 20px;
+                margin-bottom: 40px;
+            }
+            #progress::-webkit-slider-thumb{
+                -webkit-appearance: none;
+                background: black;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 5px solid white;
+                box-shadow: 0 5px 5px rgb(255, 191, 223);
+            }
+
+            .control{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                div{
+                    width: 35px;
+                    height: 35px;
+                    margin: 25px;
+                    background: white;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    color: black;
+                    box-shadow: 0 10px 20px rgb(255, 215, 240);
+                    cursor: pointer;
+                    }
+            }
+            .control div:nth-child(2){
+                    transform: scale(1.5);
+                    background: rgb(254, 174, 215);
+                    color: white;
+                    box-shadow: 0 5px 10px black;
+            }
+
+
+
+    </style>
+</head>
+<body>
+    <div class="song">
+        <div class="player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="img/10174277.png" class="img">
+            <h1>แปะหัวใจ</h1>
+            <p>Jaonaay ft. Juné</p>
+
+            <audio id="song">
+                <source src="media/แปะหัวใจ (14th Feb) .mp3" type="audio/mpeg" id="audio">
+            </audio>
+            <input type="range" min="1"  max="100" value="0" id="progress">
+
+            <div class="control">
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i class="fa-solid fa-play" id="controlIcon"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let progress = document.getElementById("progress")
+     let song = document.getElementById("song")
+     let controlIcon = document.getElementById("controlIcon")
+
+     song.onloadedmetadata = function(){
+        progress.max = song.duration;
+        progress.value = song.currentTime;
+     }
+
+     function playPause(){
+        if(controlIcon.classList.contains("fa-play")){
+            song.play();
+            controlIcon.classList.add("fa-pause")
+            controlIcon.classList.remove("fa-play")
+        }
+        else{
+            song.pause();
+            controlIcon.classList.remove("fa-pause")
+            controlIcon.classList.add("fa-play")
+        }
+     }
+
+     if(song.play()){
+        setInterval(()=>{
+            progress.value = song.currentTime;
+        },500);
+     }
+
+     progress.onchange = function(){
+        song.play();
+        song.currentTime = progress.value
+        controlIcon.classList.add("fa-pause");
+        controlIcon.classList.remove("fa-play")
+     }
+    </script>
+
+</body>
+</html>
